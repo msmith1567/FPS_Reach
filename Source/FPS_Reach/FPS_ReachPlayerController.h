@@ -8,6 +8,7 @@
 
 class UInputMappingContext;
 class UUserWidget;
+class UInputAction;
 
 /**
  *  Simple first person Player Controller
@@ -33,6 +34,13 @@ protected:
 	/** Input Mapping Contexts */
 	UPROPERTY(EditAnywhere, Category="Input|Input Mappings")
 	TArray<UInputMappingContext*> MobileExcludedMappingContexts;
+
+	// My Personal Restart Level Action
+	UPROPERTY(EditAnywhere, Category = "Input|Input Mappings")
+	UInputAction* RestartLevelAction;
+
+	// My Personal Way of Restarting the Level / Restart the Current Level
+	void RestartLevel();
 
 	/** Mobile controls widget to spawn */
 	UPROPERTY(EditAnywhere, Category="Input|Touch Controls")

@@ -54,7 +54,7 @@ protected:
 	class UInputAction* TakeDamageAction;
 
 	void TestDamage();
-	
+
 public:
 	AFPS_ReachCharacter();
 

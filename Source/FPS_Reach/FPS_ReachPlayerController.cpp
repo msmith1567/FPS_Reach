@@ -3,12 +3,14 @@
 
 #include "FPS_ReachPlayerController.h"
 #include "EnhancedInputSubsystems.h"
+#include "EnhancedInputComponent.h"
 #include "Engine/LocalPlayer.h"
 #include "InputMappingContext.h"
 #include "FPS_ReachCameraManager.h"
 #include "Blueprint/UserWidget.h"
 #include "FPS_Reach.h"
 #include "Widgets/Input/SVirtualJoystick.h"
+#include "Kismet/GameplayStatics.h"
 
 AFPS_ReachPlayerController::AFPS_ReachPlayerController()
 {
@@ -45,6 +47,11 @@ void AFPS_ReachPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
 
+	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(InputComponent)) {
+		EnhancedInputComponent->BindAction(RestartLevelAction, ETriggerEvent::Started, this, &AFPS_ReachPlayerController::RestartLevel);
+
+	}
+
 	// only add IMCs for local player controllers
 	if (IsLocalPlayerController())
 	{
@@ -73,4 +80,11 @@ bool AFPS_ReachPlayerController::ShouldUseTouchControls() const
 {
 	// are we on a mobile platform? Should we force touch?
 	return SVirtualJoystick::ShouldDisplayTouchInterface() || bForceTouchControls;
+}
+
+void AFPS_ReachPlayerController::RestartLevel() {
+	// Restarts the Level by pressing R
+
+	FName LevelName = FName(*GetWorld()->GetMapName());
+	UGameplayStatics::OpenLevel(this, LevelName);
 }

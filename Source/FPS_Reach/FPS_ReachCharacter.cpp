@@ -9,6 +9,7 @@
 #include "InputActionValue.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "FPS_Reach.h"
+#include <Kismet/GameplayStatics.h>
 
 AFPS_ReachCharacter::AFPS_ReachCharacter()
 {
@@ -62,6 +63,7 @@ void AFPS_ReachCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
 		// Testing to take damage
 		EnhancedInputComponent->BindAction(TakeDamageAction, ETriggerEvent::Started, this, &AFPS_ReachCharacter::TestDamage);
+
 	}
 	else
 	{
@@ -137,6 +139,7 @@ void AFPS_ReachCharacter::TakeDamage(int Damage) {
 	}
 
 }
+
 
 void AFPS_ReachCharacter::TestDamage() {
 	
