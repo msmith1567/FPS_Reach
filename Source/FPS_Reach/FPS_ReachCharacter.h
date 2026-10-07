@@ -23,12 +23,6 @@ class AFPS_ReachCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere)
-	int Health = 100;
-
-	
-	void TakeDamage(int Damage);
-
 	/** Pawn mesh: first person view (arms; seen only by self) */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta = (AllowPrivateAccess = "true"))
 	USkeletalMeshComponent* FirstPersonMesh;
@@ -54,9 +48,25 @@ protected:
 	/** Mouse Look Input Action */
 	UPROPERTY(EditAnywhere, Category ="Input")
 	class UInputAction* MouseLookAction;
+
+	// Test for take damage action
+	UPROPERTY(EditAnywhere, Category = "Input")
+	class UInputAction* TakeDamageAction;
+
+	void TestDamage();
 	
 public:
 	AFPS_ReachCharacter();
+
+	void TakeDamage(int Damage);
+
+private:
+
+	UPROPERTY(EditAnywhere)
+	int Health = 100;
+
+	UPROPERTY(EditAnywhere)
+	int Armor = 0;
 
 protected:
 
@@ -87,6 +97,8 @@ protected:
 	/** Set up input action bindings */
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
 	
+	// Debug Message For Health
+	FString HealthLineOutput();
 
 public:
 

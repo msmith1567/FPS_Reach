@@ -59,6 +59,9 @@ void AFPS_ReachCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 		// Looking/Aiming
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AFPS_ReachCharacter::LookInput);
 		EnhancedInputComponent->BindAction(MouseLookAction, ETriggerEvent::Triggered, this, &AFPS_ReachCharacter::LookInput);
+
+		// Testing to take damage
+		EnhancedInputComponent->BindAction(TakeDamageAction, ETriggerEvent::Started, this, &AFPS_ReachCharacter::TestDamage);
 	}
 	else
 	{
@@ -117,4 +120,26 @@ void AFPS_ReachCharacter::DoJumpEnd()
 {
 	// pass StopJumping to the character
 	StopJumping();
+}
+
+// Where my code begins.
+
+void AFPS_ReachCharacter::TakeDamage(int Damage) {
+
+	Health -= Damage;
+
+	FString HealthLineOutput = "Health: " + FString::FromInt(Health);
+
+	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, HealthLineOutput);
+
+	if (Health <= 0) {
+		Destroy();
+	}
+
+}
+
+void AFPS_ReachCharacter::TestDamage() {
+	
+	TakeDamage(25);
+
 }
